@@ -1,0 +1,4 @@
+{
+  "SLACK_WEBHOOK_TOKEN": "xxx",
+  "responseMaxMS": 90
+}

@@ -1,0 +1,19 @@
+general:
+  artifacts:
+    - htmlcov
+
+test:
+  pre:
+    - mkdir $CIRCLE_TEST_REPORTS/junit
+    - 'echo {\"SLACK_WEBHOOK_TOKEN\": \"$SLACK_WEBHOOK_TOKEN\", \"responseMaxMS\": 90} > config.json'
+  override:
+    - nosetests --with-xunit --xunit-file=$CIRCLE_TEST_REPORTS/junit/report.xml
+    - coverage run siteChecker.py 
+    - coverage report siteChecker.py
+    - coverage html siteChecker.py
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - rsync -v --exclude "htmlcov" * ubuntu@54.83.142.47:/opt/site_checker

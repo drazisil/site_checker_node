@@ -1,0 +1,106 @@
+Github:
+ base_url: "github.com"
+ path: "/"
+ checkPing: "yes"
+ checkTime: "yes"
+ checkHTTP: "no"
+ checkHTTPS: "yes"
+
+Ruby Gems:
+  base_url: "api.rubygems.org"
+  path: "/api/v1/dependencies/"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"
+  
+NodeJS Downloads:
+  base_url: "nodejs.org"
+  path: "/dist/v6.9.2/node-v6.9.2-linux-x64.tar.xz"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"
+
+NPM Registry:
+  base_url: "registry.npmjs.org"
+  path: "/"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"
+
+
+NPM Registry Mirror:
+  base_url: "skimdb.npmjs.com"
+  path: "/registry/"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"
+  
+Ruby Binary Downloads:
+  base_url: "rubies.travis-ci.org"
+  path: "/ubuntu/14.04/x86_64/ruby-2.3.3.tar.bz2"
+  checkPing: "no"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"
+
+
+Github API:
+  base_url: "api.github.com"
+  path: "/"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"
+
+Android Repository:
+  base_url: "dl.google.com"
+  path: "/android/repository/repository-11.xml"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"
+
+Android Add-Ons:
+  base_url: "dl.google.com"
+  path: "/android/repository/addon.xml"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"
+
+
+Ubuntu Archive:
+  base_url: "archive.ubuntu.com"
+  path: "/ubuntu/"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "yes"
+  checkHTTPS: "no"
+  
+Ubuntu Security Archive:
+  base_url: "security.ubuntu.com"
+  path: "/ubuntu/"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "yes"
+  checkHTTPS: "no"
+  
+Docker Hub:
+  base_url: "hub.docker.com"
+  path: "/"
+  checkPing: "no"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"
+
+Docker APT Repository:
+  base_url: "apt.dockerproject.org"
+  path: "/repo/dists/ubuntu-trusty/main/binary-amd64/"
+  checkPing: "yes"
+  checkTime: "yes"
+  checkHTTP: "no"
+  checkHTTPS: "yes"

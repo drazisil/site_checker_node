@@ -1,0 +1,22 @@
+{
+  "name": "site_checker_node",
+  "version": "0.1.0",
+  "description": "Checks sites",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/circleci/site_checker_node.git"
+  },
+  "author": "Joseph W Becher <joseph@drazisil.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/circleci/site_checker_node/issues"
+  },
+  "homepage": "https://github.com/circleci/site_checker_node#readme",
+  "dependencies": {
+    "node-json-db": "^0.7.3"
+  }
+}
