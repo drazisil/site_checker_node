@@ -1,8 +1,18 @@
-var JsonDB = require('node-json-db')
-//The second argument is used to tell the DB to save after each push 
-//If you put false, you'll have to call the save() method. 
-//The third argument is to ask JsonDB to save the database in an human readable format. (default false) 
-var db = new JsonDB("myDataBase1", true, true)
+var db = require('./db.js')
 
-//You can also push directly objects 
-db.push("/test3", {test:"test", json: {test:["test"]}});
+db.init()
+
+db.importFromYml('../site_list.yml')
+
+db.getSites(function(err, res) {
+  if (err) {
+    throw err
+  } else {
+    console.log(res)
+  }
+})
+
+// def pingTest(url):
+//    "Ping a domain. If it returns a 0, the site is good."
+//    response = subprocess.call(['ping', '-c', '1', url], stdout=subprocess.PIPE)
+//    return response
