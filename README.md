@@ -2,14 +2,20 @@
 
 Utility to check sites with StatusPages that sometimes are not up to date
 
-## Installation
+### Requirements
 
-`pip install -r requirements.txt`
+* [Sqlite3]{}(https://sqlite.org/)
 
-## Usage
+### Installation
+
+`npm install`
+
+### Usage
 
 * Copy `config-example.json` to `config.json` and edit the values
-* Run `./siteChecker.py`
+* Run `node src/index.js` <= will be `npm start` when at least version 1.0.0
 
-## Includes
-https://github.com/msiemens/tinydb
+### Contributing
+
+Feel free to submit issues and/or PRs!  In lieu of a formal style guide, 
+please follow existing styles.

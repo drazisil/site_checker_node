@@ -1,4 +1,6 @@
 {
-  "SLACK_WEBHOOK_TOKEN": "xxx",
-  "responseMaxMS": 90
+"SLACK_WEBHOOK_TOKEN": "xxx",
+"responseMaxMS": 100,
+"bot_token": "xxx",
+"slack_channel": "yyy"
 }
