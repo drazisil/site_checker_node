@@ -4,7 +4,7 @@ Utility to check sites with StatusPages that sometimes are not up to date
 
 ### Requirements
 
-* [Sqlite3]{}(https://sqlite.org/)
+* [Sqlite3](https://sqlite.org/)
 
 ### Installation
 
