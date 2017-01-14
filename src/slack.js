@@ -1,56 +1,14 @@
 var request = require('request')
 var Botkit = require('botkit')
+var http = require('./http.js')
 var controller = Botkit.slackbot()
 
 var bot
-var userList
+var config
 var channelList
 
-/*
-https://api.slack.com/methods/users.list
- */
-function getUserListFromSlack (config, callback) {
-  request('https://slack.com/api/users.list?token=' + config.bot_token, function (error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var users = []
-      body = JSON.parse(body)
-      if (body.ok === false) {
-        callback(body.error)
-      } else {
-        body.members.forEach(function (element) {
-          if (element.profile.email) {
-            users.push({'id': element.id, 'email': element.profile.email})
-          }
-        })
-        callback(null, users)
-      }
-    }
-  })
-}
-
-/*
-https://api.slack.com/methods/channels.list
- */
-function getChannelListFromSlack (config, callback) {
-  request('https://slack.com/api/channels.list?token=' + config.bot_token, function (error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var channels = []
-      body = JSON.parse(body)
-      if (body.ok === false) {
-        callback(body.error)
-      } else {
-        body.channels.forEach(function (element) {
-          if (element.is_channel && element.is_member) {
-            channels.push({'id': element.id, 'name': element.name})
-          }
-        })
-        callback(null, channels)
-      }
-    }
-  })
-}
-
-function init (config, callback) {
+function init (app_config, callback) {
+  config = app_config
   bot = controller.spawn({
     token: config.bot_token
   })
@@ -89,6 +47,29 @@ function init (config, callback) {
       ])
     })
   })
+
+  controller.hears(['checkSite'], 'direct_message,direct_mention,mention,ambient', function (bot, message) {
+    console.log(message.text)
+    if (!message.text.indexOf('|')) {
+    var site_to_check = message.text.split(' ')[1].split('|')[1].split('>')[0]  
+  } else {
+    var site_to_check = message.text.split('<')[1].split('>')[0]
+  }
+    
+    console.log(site_to_check)
+    http.checkSite(site_to_check, function(err, res) {
+      if (err) {
+        sendMessageToChannel(config.slack_channel, 'I had an error: ' + err.toString())
+        console.dir(err)
+      } else {
+        var msg = 'Site: ' + res.site_url + ', ' +
+          'Status code: ' + res.statusCode + ', ' +
+          'Request time in ms: ' + res.elapsedTime
+        sendMessageToChannel(config.slack_channel, msg)
+      }
+    })
+  })
+
   callback()
 }
 

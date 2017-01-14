@@ -28,7 +28,7 @@ db.getSites(function(err, res) {
           var msg = 'Site: ' + res.site_url + '\n' +
           'Status code: ' + res.statusCode + "\n" +
           'Request time in ms: ' + res.elapsedTime
-          sendSiteToSlack(config.slack_channel, msg, function(err, res) {
+/*          sendSiteToSlack(config.slack_channel, msg, function(err, res) {
             if (err) {
               if (err.ok !== true) {
                 console.log(err.ok + '== true' )
@@ -39,7 +39,7 @@ db.getSites(function(err, res) {
               // Don't care :)
             }
           })
-        }
+*/        }
       })
     })
   }
