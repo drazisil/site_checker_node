@@ -1,88 +1,91 @@
-var request = require('request')
 var Botkit = require('botkit')
 var http = require('./http.js')
 var controller = Botkit.slackbot()
 
 var bot
 var config
-var channelList
 
-function init (app_config, callback) {
-  config = app_config
+function init (appConfig, callback) {
+  config = appConfig
   bot = controller.spawn({
     token: config.bot_token
   })
 
-  bot.startRTM(function (err, bot, payload) {
+  bot.startRTM(function cbStartRTM (err, bot, payload) {
     if (err) {
       throw new Error('Could not connect to Slack')
     }
   })
 
-  controller.hears(['shutdown'], 'direct_message,direct_mention,mention', function (bot, message) {
+  controller.hears(['shutdown'], 'direct_message,direct_mention,mention', cmdShutdown)
 
-    bot.startConversation(message, function (err, convo) {
-      if (err) {
-        throw err
-      }
-      convo.ask('Are you sure you want me to shutdown?', [
-        {
-          pattern: bot.utterances.yes,
-          callback: function (response, convo) {
-            convo.say('Bye!')
-            convo.next()
-            setTimeout(function () {
-              process.exit()
-            }, 3000)
-          }
-        },
-        {
-          pattern: bot.utterances.no,
-          default: true,
-          callback: function (response, convo) {
-            convo.say('*Phew!*')
-            convo.next()
-          }
-        }
-      ])
-    })
-  })
-
-  controller.hears(['checkSite'], 'direct_message,direct_mention,mention,ambient', function (bot, message) {
-    console.log(message.text)
-    if (!message.text.indexOf('|')) {
-    var site_to_check = message.text.split(' ')[1].split('|')[1].split('>')[0]  
-  } else {
-    var site_to_check = message.text.split('<')[1].split('>')[0]
-  }
-    
-    console.log(site_to_check)
-    http.checkSite(site_to_check, function(err, res) {
-      if (err) {
-        sendMessageToChannel(config.slack_channel, 'I had an error: ' + err.toString())
-        console.dir(err)
-      } else {
-        var msg = 'Site: ' + res.site_url + ', ' +
-          'Status code: ' + res.statusCode + ', ' +
-          'Request time in ms: ' + res.elapsedTime
-        sendMessageToChannel(config.slack_channel, msg)
-      }
-    })
-  })
+  controller.hears(['checkSite'], 'direct_message,direct_mention,mention,ambient', cmdCheckSite)
 
   callback()
 }
 
-function sendMessageToChannel(channel, message, callback) {
+function cmdShutdown (bot, message) {
+  bot.startConversation(message, function (err, convo) {
+    if (err) {
+      throw err
+    }
+    convo.ask('Are you sure you want me to shutdown?', [
+      {
+        pattern: bot.utterances.yes,
+        callback: function (response, convo) {
+          convo.say('Bye!')
+          convo.next()
+          setTimeout(function () {
+            process.exit()
+          }, 3000)
+        }
+      },
+      {
+        pattern: bot.utterances.no,
+        default: true,
+        callback: function (response, convo) {
+          convo.say('*Phew!*')
+          convo.next()
+        }
+      }
+    ])
+  })
+}
+
+function cmdCheckSite (bot, message) {
+  var siteToCheck = message.text.split(' ')[1]
+  // First check if this is a slack link
+  if (siteToCheck.substring(0, 1) === '<') {
+    siteToCheck = siteToCheck.substring(1, siteToCheck.length - 1)
+  }
+  if (message.text.indexOf('|') >= 0) {
+    siteToCheck = siteToCheck.split('|')[1]
+  }
+
+  http.checkSite(siteToCheck, cbCheckSite)
+}
+
+function cbCheckSite (err, res) {
+  if (err) {
+    sendMessageToChannel(config.slack_channel, 'I had an error: ' + err.error)
+  } else {
+    var msg = 'Site: ' + res.data.site_url + ', ' +
+          'Status code: ' + res.data.statusCode + ', ' +
+          'Request time in ms: ' + res.data.elapsedTime
+    sendMessageToChannel(config.slack_channel, msg)
+  }
+}
+
+function sendMessageToChannel (channel, message, callback) {
   bot.say(
-  {
-    "text": message,
-    "channel": channel,
-    "unfurl_links": false
-  }, callback)
+    {
+      'text': message,
+      'channel': channel,
+      'unfurl_links': false
+    }, callback)
 }
 
 module.exports = {
   init: init,
-  sendMessageToChannel: sendMessageToChannel,
+  sendMessageToChannel: sendMessageToChannel
 }

@@ -24,5 +24,9 @@
     "slack": "^8.1.2",
     "slackbots": "^1.0.2",
     "sqlite3": "^3.1.8"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.4",
+    "standard": "^8.6.0"
   }
 }
