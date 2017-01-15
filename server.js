@@ -24,6 +24,17 @@ app.get('/check/:site', function (req, response) {
   })
 })
 
+app.get('/sites', function (req, response) {
+  // console.dir(req.body)
+  siteChecker.fetchSitesStatus(function cbGetSites (err, res) {
+    if (err) {
+      response.status(500).send(err)
+    } else {
+      response.status(200).send(res)
+    }
+  })
+})
+
 app.use(express.static('public'))
 
 http.createServer(app).listen(app.get('port'), function () {

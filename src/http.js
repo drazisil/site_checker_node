@@ -1,4 +1,5 @@
 var request = require('request')
+var db = require('./db.js')
 
 function checkSite (siteUrl, callback) {
   request.get({
@@ -10,6 +11,27 @@ function checkSite (siteUrl, callback) {
         'error': err.message})
     } else {
       response.site_url = siteUrl
+      db.updateSiteStatus(siteUrl, 'up', response.elapsedTime, function (err, res) {
+        if (err) {
+          callback({'status': 'fail',
+            'error': err.message})
+        } else {
+          callback(null, {'status': 'success',
+            'data': response})
+        }
+      })
+    }
+  })
+}
+
+function fetchSitesStatus (callback) {
+  db.getSitesStatus(function (err, response) {
+    if (err) {
+      callback(err)
+      callback({'status': 'fail',
+        'error': err.message})
+    } else {
+      console.log(response)
       callback(null, {'status': 'success',
         'data': response})
     }
@@ -25,5 +47,6 @@ function prefixIfNeeded (siteUrl) {
 }
 
 module.exports = {
-  checkSite: checkSite
+  checkSite: checkSite,
+  fetchSitesStatus: fetchSitesStatus
 }

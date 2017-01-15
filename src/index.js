@@ -51,6 +51,7 @@ function sendSiteToSlack (channel, message, callback) {
 
 module.exports = {
   checkSite: http.checkSite,
+  fetchSitesStatus: http.fetchSitesStatus,
   init: init,
   sendSiteToSlack: sendSiteToSlack
 }

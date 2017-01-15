@@ -1,24 +1,24 @@
 var yaml = require('js-yaml')
-var fs   = require('fs')
+var fs = require('fs')
 var sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('db/sites.db')
 
-function init() {
-  db.serialize(function() {
-    db.run("CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, \
-      url TEXT, status TEXT, response_time REAL)")
-  
-    db.run("CREATE TABLE IF NOT EXISTS status (id INTEGER PRIMARY KEY AUTOINCREMENT, \
-      url TEXT, status TEXT, response_time REAL)")
-  
-    db.run("CREATE TABLE IF NOT EXISTS history (info TEXT)")
-  
-    db.run("CREATE TABLE IF NOT EXISTS sites (site_id TEXT UNIQUE PRIMARY KEY, base_url TEXT, path TEXT, \
-      check_time INTEGER DEFAULT 1, check_http INTEGER DEFAULT 0, check_https DEFAULT 1)")
+function init () {
+  db.serialize(function () {
+    db.run('CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, \
+      url TEXT, status TEXT, response_time REAL)')
+
+    db.run('CREATE TABLE IF NOT EXISTS status (id INTEGER PRIMARY KEY AUTOINCREMENT, \
+      url TEXT, status TEXT, response_time REAL)')
+
+    db.run('CREATE TABLE IF NOT EXISTS history (info TEXT)')
+
+    db.run('CREATE TABLE IF NOT EXISTS sites (site_id TEXT UNIQUE PRIMARY KEY, base_url TEXT, path TEXT, \
+      check_time INTEGER DEFAULT 1, check_http INTEGER DEFAULT 0, check_https DEFAULT 1)')
   })
 }
 
-function importFromYml(yamlFile) {
+function importFromYml (yamlFile) {
   // Get document, or throw exception on error
   try {
     var doc = yaml.safeLoad(fs.readFileSync('site_list.yml', 'utf8'))
@@ -33,25 +33,37 @@ function importFromYml(yamlFile) {
     console.log(e)
   }
 
-  db.serialize(function() {
+  db.serialize(function () {
     // var stmt = db.prepare("INSERT INTO status VALUES (?, ?, ?, ?)")
     // for (var i = 0; i < 10; i++) {
     //     stmt.run(null, null, null, i)
     // }
     // stmt.finalize()
 
-    var stmt = db.prepare("INSERT OR IGNORE INTO sites VALUES (?, ?, ?, ?, ?, ?)")
-    sites.forEach(function(site) {
-      //console.dir(site)
-      var site_id = site.base_url + site.path
-      stmt.run(site_id, site.base_url, site.path, site.checkTime, site.checkHTTP, site.checkHTTPS)
+    var stmt = db.prepare('INSERT OR IGNORE INTO sites VALUES (?, ?, ?, ?, ?, ?)')
+    sites.forEach(function (site) {
+      // console.dir(site)
+      var siteId = site.base_url + site.path
+      stmt.run(siteId, site.base_url, site.path, site.checkTime, site.checkHTTP, site.checkHTTPS)
     })
     stmt.finalize()
   })
 }
 
-function getSites(callback) {
-  db.all("SELECT site_id, base_url FROM sites", function(err, rows) {
+function getSitesStatus (callback) {
+  db.all('SELECT url, status, response_time FROM status', function (err, rows) {
+    if (err) {
+      callback(err)
+    } else {
+      callback(null, rows)
+    }
+  })
+}
+
+function updateSiteStatus (url, status, responseTime, callback) {
+  var stmt = db.prepare('INSERT OR REPLACE INTO status VALUES (?, ?, ?, ?)')
+  stmt.run(null, url, status, responseTime)
+  stmt.finalize(function (err, rows) {
     if (err) {
       callback(err)
     } else {
@@ -61,7 +73,8 @@ function getSites(callback) {
 }
 
 module.exports = {
-  getSites: getSites,
+  getSitesStatus: getSitesStatus,
   importFromYml: importFromYml,
-  init: init 
+  init: init,
+  updateSiteStatus: updateSiteStatus
 }
