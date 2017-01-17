@@ -1,1 +1,69 @@
-{"_default": {"1": {"url": "security.ubuntu.com/ubuntu/", "status": "degraded", "response_time": 169.05100000000002}, "2": {"url": "github.com/", "status": "degraded", "response_time": 127.95500000000001}, "3": {"url": "rubies.travis-ci.org/ubuntu/14.04/x86_64/ruby-2.3.3.tar.bz2", "status": "degraded", "response_time": 114.767}, "4": {"url": "apt.dockerproject.org/repo/dists/ubuntu-trusty/main/binary-amd64/", "status": "up", "response_time": 0}, "5": {"url": "registry.npmjs.org/", "status": "up", "response_time": 0}, "6": {"url": "hub.docker.com/", "status": "degraded", "response_time": 154.38}, "7": {"url": "dl.google.com/android/repository/repository-11.xml", "status": "up", "response_time": 0}, "8": {"url": "api.rubygems.org/api/v1/dependencies/", "status": "degraded", "response_time": 104.075}, "9": {"url": "nodejs.org/dist/v6.9.2/node-v6.9.2-linux-x64.tar.xz", "status": "up", "response_time": 0}, "10": {"url": "dl.google.com/android/repository/addon.xml", "status": "up", "response_time": 0}, "11": {"url": "api.github.com/", "status": "up", "response_time": 98.655}, "12": {"url": "skimdb.npmjs.com/registry/", "status": "up", "response_time": 98.699}, "13": {"url": "archive.ubuntu.com/ubuntu/", "status": "degraded", "response_time": 165.67299999999997}}}
+{
+  "_default": {
+    "1": {
+      "url": "security.ubuntu.com/ubuntu/",
+      "status": "degraded",
+      "response_time": 169.05100000000002
+    },
+    "2": {
+      "url": "github.com/",
+      "status": "degraded",
+      "response_time": 127.95500000000001
+    },
+    "3": {
+      "url": "rubies.travis-ci.org/ubuntu/14.04/x86_64/ruby-2.3.3.tar.bz2",
+      "status": "degraded",
+      "response_time": 114.767
+    },
+    "4": {
+      "url": "apt.dockerproject.org/repo/dists/ubuntu-trusty/main/binary-amd64/",
+      "status": "up",
+      "response_time": 0
+    },
+    "5": {
+      "url": "registry.npmjs.org/",
+      "status": "up",
+      "response_time": 0
+    },
+    "6": {
+      "url": "hub.docker.com/",
+      "status": "degraded",
+      "response_time": 154.38
+    },
+    "7": {
+      "url": "dl.google.com/android/repository/repository-11.xml",
+      "status": "up",
+      "response_time": 0
+    },
+    "8": {
+      "url": "api.rubygems.org/api/v1/dependencies/",
+      "status": "degraded",
+      "response_time": 104.075
+    },
+    "9": {
+      "url": "nodejs.org/dist/v6.9.2/node-v6.9.2-linux-x64.tar.xz",
+      "status": "up",
+      "response_time": 0
+    },
+    "10": {
+      "url": "dl.google.com/android/repository/addon.xml",
+      "status": "up",
+      "response_time": 0
+    },
+    "11": {
+      "url": "api.github.com/",
+      "status": "up",
+      "response_time": 98.655
+    },
+    "12": {
+      "url": "skimdb.npmjs.com/registry/",
+      "status": "up",
+      "response_time": 98.699
+    },
+    "13": {
+      "url": "archive.ubuntu.com/ubuntu/",
+      "status": "degraded",
+      "response_time": 165.67299999999997
+    }
+  }
+}

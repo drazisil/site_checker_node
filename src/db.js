@@ -50,6 +50,16 @@ function importFromYml (yamlFile) {
   })
 }
 
+function getSites (callback) {
+  db.all('SELECT site_id, check_time, check_http, check_https FROM sites', function (err, rows) {
+    if (err) {
+      callback(err)
+    } else {
+      callback(null, rows)
+    }
+  })
+}
+
 function getSitesStatus (callback) {
   db.all('SELECT url, status, response_time FROM status', function (err, rows) {
     if (err) {
@@ -73,6 +83,7 @@ function updateSiteStatus (url, status, responseTime, callback) {
 }
 
 module.exports = {
+  getSites: getSites,
   getSitesStatus: getSitesStatus,
   importFromYml: importFromYml,
   init: init,

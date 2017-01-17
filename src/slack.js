@@ -1,5 +1,6 @@
 var Botkit = require('botkit')
 var http = require('./http.js')
+var db = require('./db.js')
 var controller = Botkit.slackbot()
 
 var bot
@@ -20,6 +21,8 @@ function init (appConfig, callback) {
   controller.hears(['shutdown'], 'direct_message,direct_mention,mention', cmdShutdown)
 
   controller.hears(['checkSite'], 'direct_message,direct_mention,mention,ambient', cmdCheckSite)
+
+  controller.hears(['updateAll'], 'direct_message,direct_mention', cmdUpdateAll)
 
   callback()
 }
@@ -73,6 +76,40 @@ function cbCheckSite (err, res) {
           'Status code: ' + res.data.statusCode + ', ' +
           'Request time in ms: ' + res.data.elapsedTime
     sendMessageToChannel(config.slack_channel, msg)
+  }
+}
+
+function cmdUpdateAll (bot, message) {
+ db.getSites(function (err, res) {
+    if (err) {
+      callback(err)
+    } else {
+      var siteUrl
+      res.forEach(function (site) {
+        if (site.checkHTTPS) {
+          siteUrl = 'https://' + site.site_id
+        } else {
+          siteUrl = 'http://' + site.site_id
+        }
+        http.checkSite(siteUrl, cbUpdateAll)
+      })
+    }
+  })
+}
+
+function cbUpdateAll (err, res) {
+  if (err) {
+    sendMessageToChannel(config.slack_channel, 'I had an error: ' + err.error)
+  } else {
+    var msg = 'Site: ' + res.data.site_url + ', ' +
+          'Status code: ' + res.data.statusCode + ', ' +
+          'Request time in ms: ' + res.data.elapsedTime
+    sendMessageToChannel(config.slack_channel, msg)
+    db.updateSiteStatus(res.data.site_url, res.data.statusCode, res.data.elapsedTime, function(err, response) {
+      if (err) {
+        console.error(err)
+      }
+    })
   }
 }
 
