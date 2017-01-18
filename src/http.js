@@ -1,27 +1,33 @@
 var request = require('request')
 var db = require('./db.js')
 
-function checkSite (siteUrl, callback) {
+function checkSite (site, callback) {
+  site.url = prefixIfNeeded(site)
   request.get({
-    url: prefixIfNeeded(siteUrl),
+    url: site.url,
     time: true
   }, function (err, response) {
     if (err) {
       callback({'status': 'fail',
         'error': err.message})
     } else {
-      response.site_url = siteUrl
-      db.updateSiteStatus(siteUrl, 'up', response.elapsedTime, function (err, res) {
+      db.updateSiteStatus(site.url, getStatusFromResponseTime(response.elapsedTime, site.esponse_threshold), response.elapsedTime,
+        function (err, res) {
         if (err) {
           callback({'status': 'fail',
             'error': err.message})
         } else {
+          response.url = site.url
           callback(null, {'status': 'success',
             'data': response})
         }
       })
     }
   })
+}
+
+function getStatusFromResponseTime(response_time, response_threshold) {
+  return 'up'
 }
 
 function fetchSitesStatus (callback) {
@@ -37,11 +43,17 @@ function fetchSitesStatus (callback) {
   })
 }
 
-function prefixIfNeeded (siteUrl) {
-  if (siteUrl.substring(0, 7) !== 'http://' && siteUrl.substring(0, 8) !== 'https://') {
-    return 'http://' + siteUrl
+function prefixIfNeeded (site) {
+  if (site.url.substring(0, 7) !== 'http://' && site.url.substring(0, 8) !== 'https://') {
+    if (site.check_http) {
+      return 'http://' + site.url
+    } else if (site.check_https) {
+      return 'https://' + site.url
+    } else {
+      return 'http://' + site.url
+    }
   } else {
-    return siteUrl
+    return site.url
   }
 }
 

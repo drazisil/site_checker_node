@@ -74,7 +74,7 @@ function cbCheckSite (err, res) {
   if (err) {
     sendMessageToChannel(config.slack_channel, 'I had an error: ' + err.error)
   } else {
-    var msg = 'Site: ' + res.data.site_url + ', ' +
+    var msg = 'Site: ' + res.data.url + ', ' +
           'Status code: ' + res.data.statusCode + ', ' +
           'Request time in ms: ' + res.data.elapsedTime
     sendMessageToChannel(config.slack_channel, msg)
@@ -88,12 +88,7 @@ function cmdUpdateAll (bot, message) {
     } else {
       var siteUrl
       res.forEach(function (site) {
-        if (site.checkHTTPS) {
-          siteUrl = 'https://' + site.site_id
-        } else {
-          siteUrl = 'http://' + site.site_id
-        }
-        http.checkSite(siteUrl, cbUpdateAll)
+        http.checkSite(site, cbUpdateAll)
       })
     }
   })
@@ -103,15 +98,10 @@ function cbUpdateAll (err, res) {
   if (err) {
     sendMessageToChannel(config.slack_channel, 'I had an error: ' + err.error)
   } else {
-    var msg = 'Site: ' + res.data.site_url + ', ' +
+    var msg = 'Site: ' + res.data.url + ', ' +
           'Status code: ' + res.data.statusCode + ', ' +
           'Request time in ms: ' + res.data.elapsedTime
     sendMessageToChannel(config.slack_channel, msg)
-    db.updateSiteStatus(res.data.site_url, res.data.statusCode, res.data.elapsedTime, function (err, response) {
-      if (err) {
-        console.error(err)
-      }
-    })
   }
 }
 

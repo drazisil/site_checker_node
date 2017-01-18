@@ -19,17 +19,12 @@ function updateAllSites (callback) {
     } else {
       var siteUrl
       res.forEach(function (site) {
-        if (site.checkHTTPS) {
-          siteUrl = 'https://' + site.site_id
-        } else {
-          siteUrl = 'http://' + site.site_id
-        }
         http.checkSite(siteUrl, function (err, res) {
           if (err) {
             callback(err)
           } else {
             callback(null, {'status': 'success',
-              'msg': 'Site: ' + res.site_url + '\n' +
+              'msg': 'Site: ' + res.url + '\n' +
           'Status code: ' + res.statusCode + '\n' +
           'Request time in ms: ' + res.elapsedTime})
           }
