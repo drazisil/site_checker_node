@@ -31,7 +31,6 @@ function fetchSitesStatus (callback) {
       callback({'status': 'fail',
         'error': err.message})
     } else {
-      console.log(response)
       callback(null, {'status': 'success',
         'data': response})
     }

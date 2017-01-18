@@ -24,6 +24,8 @@ function init (appConfig, callback) {
 
   controller.hears(['updateAll'], 'direct_message,direct_mention', cmdUpdateAll)
 
+  controller.hears(['fetchStatusAll'], 'direct_message,direct_mention', cmdFetchStatusAll)
+
   callback()
 }
 
@@ -80,9 +82,9 @@ function cbCheckSite (err, res) {
 }
 
 function cmdUpdateAll (bot, message) {
- db.getSites(function (err, res) {
+  db.getSites(function (err, res) {
     if (err) {
-      callback(err)
+      throw err
     } else {
       var siteUrl
       res.forEach(function (site) {
@@ -105,12 +107,28 @@ function cbUpdateAll (err, res) {
           'Status code: ' + res.data.statusCode + ', ' +
           'Request time in ms: ' + res.data.elapsedTime
     sendMessageToChannel(config.slack_channel, msg)
-    db.updateSiteStatus(res.data.site_url, res.data.statusCode, res.data.elapsedTime, function(err, response) {
+    db.updateSiteStatus(res.data.site_url, res.data.statusCode, res.data.elapsedTime, function (err, response) {
       if (err) {
         console.error(err)
       }
     })
   }
+}
+
+function cmdFetchStatusAll (bot, message) {
+  db.getSitesStatus(function (err, res) {
+    if (err) {
+      throw err
+    } else {
+      res.forEach(function (site) {
+        var msg = 'Site: ' + site.url + ', ' +
+          'Status code: ' + site.status + ', ' +
+          'Request time in ms: ' + site.response_time + ', ' +
+          'Last Updated:' + Date(site.last_updated)
+        sendMessageToChannel(config.slack_channel, msg)
+      })
+    }
+  })
 }
 
 function sendMessageToChannel (channel, message, callback) {

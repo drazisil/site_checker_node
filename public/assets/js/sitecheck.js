@@ -9,13 +9,16 @@ buildWatchApp.controller('NavController', function ($scope, $route, $routeParams
 
 buildWatchApp.config(function ($routeProvider, $locationProvider) {
   $routeProvider
-   .when('/profile', {
-     templateUrl: 'templates/profile.html',
-     controller: 'ProfileController'
-   }).otherwise({
-     templateUrl: 'templates/index.html',
-     controller: 'IndexController'
-   })
+    .when('/profile', {
+      templateUrl: 'templates/profile.html',
+      controller: 'ProfileController'
+    }).when('/siteDetail/:site_url*', {
+      templateUrl: 'templates/site.html',
+      controller: 'SiteController'
+    }).otherwise({
+      templateUrl: 'templates/index.html',
+      controller: 'IndexController'
+    })
 })
 
 buildWatchApp.controller('IndexController', function ($http, $scope) {
@@ -25,9 +28,8 @@ buildWatchApp.controller('IndexController', function ($http, $scope) {
   frontpage.sites = {}
 
   function updateSites (frontpage) {
-    $http.get('./sites').then(function (r) {
+    $http.get('./api/sites').then(function (r) {
       frontpage.sites = r.data.data
-      console.log('moo:', r.data.data)
     })
   };
 
@@ -39,5 +41,9 @@ buildWatchApp.controller('IndexController', function ($http, $scope) {
 })
 
 buildWatchApp.controller('ProfileController', function ($scope, $location) {
+  $scope.$location = $location
+})
+
+buildWatchApp.controller('SiteController', function ($scope, $location) {
   $scope.$location = $location
 })

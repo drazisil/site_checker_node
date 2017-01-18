@@ -24,7 +24,7 @@ app.get('/check/:site', function (req, response) {
   })
 })
 
-app.get('/sites', function (req, response) {
+app.get('/api/sites', function (req, response) {
   // console.dir(req.body)
   siteChecker.fetchSitesStatus(function cbGetSites (err, res) {
     if (err) {
@@ -44,7 +44,5 @@ http.createServer(app).listen(app.get('port'), function () {
 siteChecker.init(config, function (err, res) {
   if (err) {
     throw err
-  } else {
-    console.log(res)
   }
 })

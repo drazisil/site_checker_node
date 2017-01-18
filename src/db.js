@@ -5,16 +5,13 @@ var db = new sqlite3.Database('db/sites.db')
 
 function init () {
   db.serialize(function () {
-    db.run('CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, \
-      url TEXT, status TEXT, response_time REAL)')
+    db.run('CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, status TEXT, response_time REAL)')
 
-    db.run('CREATE TABLE IF NOT EXISTS status (id INTEGER PRIMARY KEY AUTOINCREMENT, \
-      url TEXT, status TEXT, response_time REAL)')
+    db.run('CREATE TABLE IF NOT EXISTS status (id INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, status TEXT, response_time REAL, last_updated INTEGER)')
 
     db.run('CREATE TABLE IF NOT EXISTS history (info TEXT)')
 
-    db.run('CREATE TABLE IF NOT EXISTS sites (site_id TEXT UNIQUE PRIMARY KEY, base_url TEXT, path TEXT, \
-      check_time INTEGER DEFAULT 1, check_http INTEGER DEFAULT 0, check_https DEFAULT 1)')
+    db.run('CREATE TABLE IF NOT EXISTS sites (site_id TEXT UNIQUE PRIMARY KEY, base_url TEXT, path TEXT, check_time INTEGER DEFAULT 1, check_http INTEGER DEFAULT 0, check_https DEFAULT 1)')
   })
 }
 
@@ -61,7 +58,7 @@ function getSites (callback) {
 }
 
 function getSitesStatus (callback) {
-  db.all('SELECT url, status, response_time FROM status', function (err, rows) {
+  db.all('SELECT url, status, response_time, last_updated FROM status', function (err, rows) {
     if (err) {
       callback(err)
     } else {
@@ -71,8 +68,8 @@ function getSitesStatus (callback) {
 }
 
 function updateSiteStatus (url, status, responseTime, callback) {
-  var stmt = db.prepare('INSERT OR REPLACE INTO status VALUES (?, ?, ?, ?)')
-  stmt.run(null, url, status, responseTime)
+  var stmt = db.prepare('INSERT OR REPLACE INTO status VALUES (?, ?, ?, ?, ?)')
+  stmt.run(null, url, status, responseTime, Date.now())
   stmt.finalize(function (err, rows) {
     if (err) {
       callback(err)
