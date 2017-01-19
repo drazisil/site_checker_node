@@ -2,4 +2,6 @@ test:
   pre:
     - mkdir $CIRCLE_TEST_REPORTS/junit
     - 'echo {\"SLACK_WEBHOOK_TOKEN\": \"$SLACK_WEBHOOK_TOKEN\", \"responseMaxMS\": 90} > config.json'
+  post:
+    - cp test_results/ $CIRCLE_TEST_REPORTS/junit
 

@@ -4,7 +4,7 @@
   "description": "Checks sites",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/mocha/bin/mocha -R mocha-multi --reporter-options spec=-,xunit=test_results/results.xml"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,9 @@
   },
   "devDependencies": {
     "jshint": "^2.9.4",
+    "mocha": "^3.2.0",
+    "mocha-multi": "^0.10.0",
+    "should": "^11.1.2",
     "standard": "^8.6.0"
   }
 }
