@@ -1,6 +1,7 @@
 var Botkit = require('botkit')
 var http = require('./http.js')
 var db = require('./db.js')
+
 var controller = Botkit.slackbot()
 
 var bot
@@ -59,8 +60,6 @@ function cmdShutdown (bot, message) {
   })
 }
 
-
-
 function cmdCheckSite (bot, message) {
   var siteToCheck = message.text.split(' ')[1]
   // First check if this is a slack link
@@ -116,7 +115,6 @@ function cmdUpdateAll (bot, message) {
     if (err) {
       throw err
     } else {
-      var siteUrl
       res.forEach(function (site) {
         http.checkSite(site, cbUpdateAll)
       })

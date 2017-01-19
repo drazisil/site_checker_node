@@ -13,20 +13,20 @@ function checkSite (site, callback) {
     } else {
       db.updateSiteStatus(site.url, getStatusFromResponseTime(response.elapsedTime, site.esponse_threshold), response.elapsedTime,
         function (err, res) {
-        if (err) {
-          callback({'status': 'fail',
-            'error': err.message})
-        } else {
-          response.url = site.url
-          callback(null, {'status': 'success',
-            'data': response})
-        }
-      })
+          if (err) {
+            callback({'status': 'fail',
+              'error': err.message})
+          } else {
+            response.url = site.url
+            callback(null, {'status': 'success',
+              'data': response})
+          }
+        })
     }
   })
 }
 
-function getStatusFromResponseTime(response_time, response_threshold) {
+function getStatusFromResponseTime (responseTime, responseThreshold) {
   return 'up'
 }
 
@@ -42,21 +42,19 @@ function fetchSitesStatus (callback) {
 }
 
 function fetchLatestStatus (sites, callback) {
-  var latestStatuses = []
-    async.map(sites, db.getSiteStatusLatest, function(err, results) {
-      if (err) {
-        throw err
-      }
-      callback(null, {'status': 'success',
-            'data': results})
-    })
+  async.map(sites, db.getSiteStatusLatest, function (err, results) {
+    if (err) {
+      throw err
+    }
+    callback(null, {'status': 'success',
+      'data': results})
+  })
 }
 
 /* 1: Get all sites
 * 2: For each site, get latest status
 * 3: return array of statues
 */
-
 
 function fetchSiteStatusLatest (site, callback) {
   db.getSiteStatusLatest(site, function (err, response) {
@@ -70,7 +68,7 @@ function fetchSiteStatusLatest (site, callback) {
           'error': 'No status found for site: ' + site.url})
       } else {
         callback(null, {'status': 'success',
-          'data': response})        
+          'data': response})
       }
     }
   })

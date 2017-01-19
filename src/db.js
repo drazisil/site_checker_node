@@ -29,7 +29,6 @@ function importFromYml (yamlFile) {
   db.serialize(function () {
     var stmt = db.prepare('INSERT OR IGNORE INTO sites VALUES (?, ?, ?, ?)')
     sites.forEach(function (site) {
-      var siteId = site.url
       stmt.run(site.url, site.checkTime, site.checkHTTP, site.checkHTTPS)
     })
     stmt.finalize()

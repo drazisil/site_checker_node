@@ -37,4 +37,5 @@ jspm_packages
 .node_repl_history
 config.json
 db/*
-test_results/*
+test-results.xml
+node-coverage/*

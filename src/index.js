@@ -12,28 +12,6 @@ function init (config, callback) {
   })
 }
 
-function updateAllSites (callback) {
-  db.getSites(function (err, res) {
-    if (err) {
-      callback(err)
-    } else {
-      var siteUrl
-      res.forEach(function (site) {
-        http.checkSite(siteUrl, function (err, res) {
-          if (err) {
-            callback(err)
-          } else {
-            callback(null, {'status': 'success',
-              'msg': 'Site: ' + res.url + '\n' +
-          'Status code: ' + res.statusCode + '\n' +
-          'Request time in ms: ' + res.elapsedTime})
-          }
-        })
-      })
-    }
-  })
-}
-
 function sendSiteToSlack (channel, message, callback) {
   slack.sendMessageToChannel(channel, message, function (err, res) {
     if (err) {
