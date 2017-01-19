@@ -38,7 +38,7 @@ function importFromYml (yamlFile) {
 }
 
 function getSites (callback) {
-  db.all('SELECT url, check_time, check_http, check_https FROM sites', function (err, rows) {
+  db.all('SELECT url, check_time, check_http, check_https FROM sites', function cbAll (err, rows) {
     if (err) {
       callback(err)
     } else {
@@ -53,6 +53,16 @@ function getSitesStatus (callback) {
       callback(err)
     } else {
       callback(null, rows)
+    }
+  })
+}
+
+function getSiteStatusLatest (site, callback) {
+  db.get('SELECT url, status, response_time, last_updated FROM status WHERE url = "' + site.url + '" ORDER BY last_updated DESC', function cbGet (err, row) {
+    if (err) {
+      callback(err)
+    } else {
+      callback(null, row)
     }
   })
 }
@@ -72,6 +82,7 @@ function updateSiteStatus (url, status, responseTime, callback) {
 module.exports = {
   getSites: getSites,
   getSitesStatus: getSitesStatus,
+  getSiteStatusLatest: getSiteStatusLatest,
   importFromYml: importFromYml,
   init: init,
   updateSiteStatus: updateSiteStatus

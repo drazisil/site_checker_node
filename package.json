@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/circleci/site_checker_node#readme",
   "dependencies": {
+    "async": "^2.1.4",
     "botkit": "^0.4.9",
     "js-yaml": "^3.7.0",
     "node-json-db": "^0.7.3",

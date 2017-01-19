@@ -22,6 +22,8 @@ function init (appConfig, callback) {
 
   controller.hears(['checkSite'], 'direct_message,direct_mention,mention,ambient', cmdCheckSite)
 
+  controller.hears(['siteStatus'], 'direct_message,direct_mention,mention,ambient', cmdSiteStatus)
+
   controller.hears(['updateAll'], 'direct_message,direct_mention', cmdUpdateAll)
 
   controller.hears(['fetchStatusAll'], 'direct_message,direct_mention', cmdFetchStatusAll)
@@ -57,6 +59,8 @@ function cmdShutdown (bot, message) {
   })
 }
 
+
+
 function cmdCheckSite (bot, message) {
   var siteToCheck = message.text.split(' ')[1]
   // First check if this is a slack link
@@ -66,8 +70,9 @@ function cmdCheckSite (bot, message) {
   if (message.text.indexOf('|') >= 0) {
     siteToCheck = siteToCheck.split('|')[1]
   }
-
-  http.checkSite(siteToCheck, cbCheckSite)
+  var site = {}
+  site.url = siteToCheck
+  http.checkSite(site, cbCheckSite)
 }
 
 function cbCheckSite (err, res) {
@@ -77,6 +82,31 @@ function cbCheckSite (err, res) {
     var msg = 'Site: ' + res.data.url + ', ' +
           'Status code: ' + res.data.statusCode + ', ' +
           'Request time in ms: ' + res.data.elapsedTime
+    sendMessageToChannel(config.slack_channel, msg)
+  }
+}
+
+function cmdSiteStatus (bot, message) {
+  var siteToCheck = message.text.split(' ')[1]
+  // First check if this is a slack link
+  if (siteToCheck.substring(0, 1) === '<') {
+    siteToCheck = siteToCheck.substring(1, siteToCheck.length - 1)
+  }
+  if (message.text.indexOf('|') >= 0) {
+    siteToCheck = siteToCheck.split('|')[1]
+  }
+  var site = {}
+  site.url = siteToCheck
+  http.fetchSiteStatusLatest(site, cbSiteStatus)
+}
+
+function cbSiteStatus (err, res) {
+  if (err) {
+    sendMessageToChannel(config.slack_channel, 'I had an error: ' + err.error)
+  } else {
+    var msg = 'Site: ' + res.data.url + ', ' +
+          'Status: ' + res.data.status + ', ' +
+          'Request time in ms: ' + res.data.response_time
     sendMessageToChannel(config.slack_channel, msg)
   }
 }

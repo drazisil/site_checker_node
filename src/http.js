@@ -1,10 +1,10 @@
 var request = require('request')
 var db = require('./db.js')
+var async = require('async')
 
 function checkSite (site, callback) {
-  site.url = prefixIfNeeded(site)
   request.get({
-    url: site.url,
+    url: prefixIfNeeded(site),
     time: true
   }, function (err, response) {
     if (err) {
@@ -31,14 +31,49 @@ function getStatusFromResponseTime(response_time, response_threshold) {
 }
 
 function fetchSitesStatus (callback) {
-  db.getSitesStatus(function (err, response) {
+  db.getSites(function (err, res) {
+    if (err) {
+      callback({'status': 'fail',
+        'error': err.message})
+    } else {
+      fetchLatestStatus(res, callback)
+    }
+  })
+}
+
+function fetchLatestStatus (sites, callback) {
+  var latestStatuses = []
+  console.log('1')
+    async.map(sites, db.getSiteStatusLatest, function(err, results) {
+      if (err) {
+        throw err
+      }
+      console.log('3')
+      callback(null, {'status': 'success',
+            'data': results})
+    })
+}
+
+/* 1: Get all sites
+* 2: For each site, get latest status
+* 3: return array of statues
+*/
+
+
+function fetchSiteStatusLatest (site, callback) {
+  db.getSiteStatusLatest(site, function (err, response) {
     if (err) {
       callback(err)
       callback({'status': 'fail',
         'error': err.message})
     } else {
-      callback(null, {'status': 'success',
-        'data': response})
+      if (response === undefined) {
+        callback({'status': 'fail',
+          'error': 'No status found for site: ' + site.url})
+      } else {
+        callback(null, {'status': 'success',
+          'data': response})        
+      }
     }
   })
 }
@@ -59,5 +94,6 @@ function prefixIfNeeded (site) {
 
 module.exports = {
   checkSite: checkSite,
+  fetchSiteStatusLatest: fetchSiteStatusLatest,
   fetchSitesStatus: fetchSitesStatus
 }
