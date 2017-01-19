@@ -8,7 +8,7 @@ function init (config, callback) {
   db.importFromYml('../site_list.yml')
 
   slack.init(config, function () {
-    console.log('Slack connected')
+    // TODO: Add logging
   })
 }
 

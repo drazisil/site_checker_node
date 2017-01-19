@@ -23,13 +23,12 @@ function importFromYml (yamlFile) {
       sites.push(thisSite)
     }
   } catch (e) {
-    console.log(e)
+    throw e
   }
 
   db.serialize(function () {
     var stmt = db.prepare('INSERT OR IGNORE INTO sites VALUES (?, ?, ?, ?)')
     sites.forEach(function (site) {
-      // console.dir(site)
       var siteId = site.url
       stmt.run(site.url, site.checkTime, site.checkHTTP, site.checkHTTPS)
     })

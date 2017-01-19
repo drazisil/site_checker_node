@@ -43,12 +43,10 @@ function fetchSitesStatus (callback) {
 
 function fetchLatestStatus (sites, callback) {
   var latestStatuses = []
-  console.log('1')
     async.map(sites, db.getSiteStatusLatest, function(err, results) {
       if (err) {
         throw err
       }
-      console.log('3')
       callback(null, {'status': 'success',
             'data': results})
     })
