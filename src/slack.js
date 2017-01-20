@@ -1,6 +1,7 @@
 var Botkit = require('botkit')
 var http = require('./http.js')
 var db = require('./db.js')
+var async = require('async')
 
 var controller = Botkit.slackbot()
 
@@ -134,19 +135,31 @@ function cbUpdateAll (err, res) {
 }
 
 function cmdFetchStatusAll (bot, message) {
-  db.getSitesStatus(function (err, res) {
+  db.getSites(function (err, res) {
     if (err) {
-      throw err
+      sendMessageToChannel(config.slack_channel, 'I had an error: ' + err.error)
     } else {
-      res.forEach(function (site) {
-        var msg = 'Site: ' + site.url + ', ' +
-          'Status code: ' + site.status + ', ' +
-          'Request time in ms: ' + site.response_time + ', ' +
-          'Last Updated:' + Date(site.last_updated)
-        sendMessageToChannel(config.slack_channel, msg)
+      async.map(res, db.getSiteStatusLatest, function (err, res) {
+        if (err) {
+          throw err
+        } else {
+          async.map(res, sendSiteToSlack, function (err, results) {
+            if (err) {
+              throw err
+            }
+          })
+        }
       })
     }
   })
+}
+
+function sendSiteToSlack (site, callback) {
+  var msg = 'Site: ' + site.url + ', ' +
+          'Status code: ' + site.status + ', ' +
+          'Request time in ms: ' + site.response_time + ', ' +
+          'Last Updated:' + Date(site.last_updated)
+  sendMessageToChannel(config.slack_channel, msg)
 }
 
 function sendMessageToChannel (channel, message, callback) {
