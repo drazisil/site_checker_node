@@ -17,9 +17,11 @@ app.get('/check/:site', function (req, response) {
   // console.dir(req.body)
   siteChecker.checkSite(req.params.site, function cbCheckSite (err, res) {
     if (err) {
-      response.status(500).send(err)
+      response.status(500).send({'status': 'fail',
+        'error': err.message})
     } else {
-      response.status(200).send(res)
+      response.status(200).send({'status': 'success',
+        'data': res})
     }
   })
 })
@@ -28,9 +30,11 @@ app.get('/api/sites', function (req, response) {
   // console.dir(req.body)
   siteChecker.fetchSitesStatus(function cbGetSites (err, res) {
     if (err) {
-      response.status(500).send(err)
+      response.status(500).send({'status': 'fail',
+        'error': err.message})
     } else {
-      response.status(200).send(res)
+      response.status(200).send({'status': 'success',
+        'data': res})
     }
   })
 })
