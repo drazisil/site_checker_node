@@ -30,7 +30,18 @@ function init (appConfig, callback) {
 
   controller.hears(['fetchStatusAll'], 'direct_message,direct_mention', cmdFetchStatusAll)
 
+  controller.hears(['help'], 'direct_message,direct_mention', cmdHelp)
+
   callback()
+}
+
+function cmdHelp (bot, message) {
+  var msg = 'checkSite <site url>\n' +
+  'siteStatus <site url>\n' +
+  'fetchStatusAll\n' +
+  'updateAll\n' +
+  'shutdown'
+  bot.reply(message, msg)
 }
 
 function cmdShutdown (bot, message) {
