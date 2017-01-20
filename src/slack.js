@@ -8,7 +8,9 @@ var controller = Botkit.slackbot()
 var bot
 var config
 
-function init (config, callback) {
+function init (configuration, callback) {
+  config = configuration
+
   // Tell bot to reconnect on disconnect in case of error
   config.retry = true
 
