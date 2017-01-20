@@ -1,6 +1,7 @@
 var db = require('./db.js')
 var http = require('./http.js')
 var slack = require('./slack.js')
+var timer = require('./loop.js')
 
 function init (config, callback) {
   db.init()
@@ -10,6 +11,12 @@ function init (config, callback) {
   slack.init(config, function () {
     // TODO: Add logging
   })
+
+  // Create list of sites to check
+  timer.init()
+
+  // Set timer to check sites
+  timer.start()
 }
 
 function sendSiteToSlack (channel, message, callback) {

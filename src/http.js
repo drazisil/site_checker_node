@@ -8,18 +8,15 @@ function checkSite (site, callback) {
     time: true
   }, function (err, response) {
     if (err) {
-      callback({'status': 'fail',
-        'error': err.message})
+      callback(err)
     } else {
       db.updateSiteStatus(site.url, getStatusFromResponseTime(response.elapsedTime, site.esponse_threshold), response.elapsedTime,
         function (err, res) {
           if (err) {
-            callback({'status': 'fail',
-              'error': err.message})
+            callback(err)
           } else {
             response.url = site.url
-            callback(null, {'status': 'success',
-              'data': response})
+            callback(null, response)
           }
         })
     }
@@ -33,8 +30,7 @@ function getStatusFromResponseTime (responseTime, responseThreshold) {
 function fetchSitesStatus (callback) {
   db.getSites(function (err, res) {
     if (err) {
-      callback({'status': 'fail',
-        'error': err.message})
+      callback(err)
     } else {
       fetchLatestStatus(res, callback)
     }
@@ -46,8 +42,7 @@ function fetchLatestStatus (sites, callback) {
     if (err) {
       throw err
     }
-    callback(null, {'status': 'success',
-      'data': results})
+    callback(null, results)
   })
 }
 
@@ -60,15 +55,12 @@ function fetchSiteStatusLatest (site, callback) {
   db.getSiteStatusLatest(site, function (err, response) {
     if (err) {
       callback(err)
-      callback({'status': 'fail',
-        'error': err.message})
     } else {
       if (response === undefined) {
         callback({'status': 'fail',
           'error': 'No status found for site: ' + site.url})
       } else {
-        callback(null, {'status': 'success',
-          'data': response})
+        callback(null, response)
       }
     }
   })
