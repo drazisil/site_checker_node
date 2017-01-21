@@ -36,6 +36,7 @@ function checkSites () {
     if (err) {
       stop()
       console.error('Timer: Error, stopping timer: ' + err)
+      console.error(err.message)
     } else {
       console.log('Timer: Updated all sites')
     }

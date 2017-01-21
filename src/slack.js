@@ -16,7 +16,8 @@ function init (configuration, callback) {
 
   // Launch bot
   bot = controller.spawn({
-    token: config.bot_token
+    token: config.bot_token,
+    retry: config.retry
   })
 
   bot.startRTM(function cbStartRTM (err, bot, payload) {
