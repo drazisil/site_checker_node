@@ -1,6 +1,7 @@
 var async = require('async')
 var db = require('./db.js')
 var http = require('./http.js')
+var logger = require('./logger.js')
 
 var timerInterval = 100000
 var timerIsRunning = false
@@ -11,7 +12,7 @@ var siteList
 function init () {
   db.getSites(function (err, res) {
     if (err) {
-      console.error('Timer: Error, can not init timer: ' + err)
+      logger.error('Timer: Error, can not init timer: ' + err)
     } else {
       siteList = res
     }
@@ -20,13 +21,13 @@ function init () {
 
 function start () {
   checkSites()
-  console.log('Timer: starting timer...')
+  logger.info('Timer: starting timer...')
   timerPID = setInterval(checkSites, timerInterval)
   timerIsRunning = true
 }
 
 function stop () {
-  console.log('Timer: stopping timer...')
+  logger.info('Timer: stopping timer...')
   clearInterval(timerPID)
   timerIsRunning = false
 }
@@ -35,10 +36,10 @@ function checkSites () {
   async.map(siteList, http.checkSite, function (err, result) {
     if (err) {
       stop()
-      console.error('Timer: Error, stopping timer: ' + err)
-      console.error(err.message)
+      logger.error('Timer: Error, stopping timer: ' + err)
+      logger.error(err.message)
     } else {
-      console.log('Timer: Updated all sites')
+      logger.info('Timer: Updated all sites')
     }
   })
 }
@@ -53,4 +54,3 @@ module.exports = {
   stop: stop,
   isTimerRunning: isTimerRunning
 }
-

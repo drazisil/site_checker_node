@@ -2,8 +2,12 @@ var Botkit = require('botkit')
 var http = require('./http.js')
 var db = require('./db.js')
 var async = require('async')
+var logger = require('./logger.js')
 
-var controller = Botkit.slackbot()
+var controller = Botkit.slackbot({
+  retry: true,
+  logger: logger
+})
 
 var bot
 var config
@@ -16,8 +20,7 @@ function init (configuration, callback) {
 
   // Launch bot
   bot = controller.spawn({
-    token: config.bot_token,
-    retry: config.retry
+    token: config.bot_token
   })
 
   bot.startRTM(function cbStartRTM (err, bot, payload) {
