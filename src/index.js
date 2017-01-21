@@ -19,19 +19,9 @@ function init (config, callback) {
   timer.start()
 }
 
-function sendSiteToSlack (channel, message, callback) {
-  slack.sendMessageToChannel(channel, message, function (err, res) {
-    if (err) {
-      callback(err)
-    } else {
-      callback(res)
-    }
-  })
-}
-
 module.exports = {
   checkSite: http.checkSite,
   fetchSitesStatus: http.fetchSitesStatus,
   init: init,
-  sendSiteToSlack: sendSiteToSlack
+  sendSiteToSlack: slack.sendMessageToChannel
 }

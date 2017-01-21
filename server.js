@@ -4,6 +4,7 @@ var http = require('http')
 var bodyParser = require('body-parser')
 
 var siteChecker = require('./src/index.js')
+var logger = require('./src/logger.js')
 
 var app = express()
 
@@ -42,7 +43,7 @@ app.get('/api/sites', function (req, response) {
 app.use(express.static('public'))
 
 http.createServer(app).listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'))
+  logger.info('Express server listening on port ' + app.get('port'))
 })
 
 siteChecker.init(config, function (err, res) {
