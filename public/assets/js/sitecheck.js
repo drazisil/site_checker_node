@@ -1,16 +1,16 @@
 /* global angular */
-var buildWatchApp = angular.module('checkSite', ['ngRoute'])
+var app = angular.module('checkSite', ['ngRoute'])
 
-buildWatchApp.controller('NavController', function ($scope, $route, $routeParams, $location) {
+app.controller('NavController', function ($scope, $route, $routeParams, $location) {
   $scope.$route = $route
   $scope.$location = $location
   $scope.$routeParams = $routeParams
 })
 
-buildWatchApp.config(function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/profile', {
-      templateUrl: 'templates/profile.html',
+      templateUrl: 'templates/login.html',
       controller: 'ProfileController'
     }).when('/siteDetail/:site_url*', {
       templateUrl: 'templates/site.html',
@@ -21,7 +21,7 @@ buildWatchApp.config(function ($routeProvider, $locationProvider) {
     })
 })
 
-buildWatchApp.controller('IndexController', function ($http, $scope) {
+app.controller('IndexController', function ($http, $scope) {
   var frontpage = this
   frontpage.scope = $scope
 
@@ -40,10 +40,38 @@ buildWatchApp.controller('IndexController', function ($http, $scope) {
   updateSites(frontpage)
 })
 
-buildWatchApp.controller('ProfileController', function ($scope, $location) {
+app.controller('ProfileController', function ($scope, $window, $location) {
+  $scope.$location = $location
+
+  if ($scope.isLoggedIn) {
+    $location.path('/profile')
+  } else {
+    $window.location.href = '/profile'
+  }
+})
+
+app.controller('SiteController', function ($scope, $location) {
   $scope.$location = $location
 })
 
-buildWatchApp.controller('SiteController', function ($scope, $location) {
+app.controller('AppController', function ($scope, $window, $location) {
   $scope.$location = $location
+  $scope.user = {}
+  $scope.user.code = searchToObject().code
+  console.dir($scope.user)
 })
+
+function searchToObject () {
+  var pairs = window.location.search.substring(1).split('&')
+  var obj = {}
+  var pair
+
+  for (var i in pairs) {
+    if (pairs[i] === '') continue
+
+    pair = pairs[i].split('=')
+    obj[ decodeURIComponent(pair[0]) ] = decodeURIComponent(pair[1])
+  }
+
+  return obj
+}
