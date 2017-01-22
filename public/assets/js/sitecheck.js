@@ -46,7 +46,7 @@ app.controller('ProfileController', function ($scope, $window, $location) {
   if ($scope.isLoggedIn) {
     $location.path('/profile')
   } else {
-    $window.location.href = '/profile'
+    $window.location.href = '/login'
   }
 })
 
@@ -56,8 +56,12 @@ app.controller('SiteController', function ($scope, $location) {
 
 app.controller('AppController', function ($scope, $window, $location) {
   $scope.$location = $location
-  $scope.user = {}
-  $scope.user.code = searchToObject().code
+  if (!$scope.user) {
+    $scope.user = {}
+  }
+  if (!$scope.user.code && (searchToObject().code !== '')) {
+    $scope.user.code = searchToObject().code
+  }
   console.dir($scope.user)
 })
 

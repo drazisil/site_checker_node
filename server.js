@@ -52,6 +52,8 @@ passport.use(new GitHubStrategy({
   }
 ))
 
+var oAuthCode = ''
+
 var app = express()
 
 // configure Express
@@ -71,9 +73,9 @@ app.set('view engine', 'ejs')
   res.render('index', { user: req.user })
 })
 */
-app.get('/profile', ensureAuthenticated, function (req, res) {
+app.get('/login', ensureAuthenticated, function (req, res) {
   // res.render('account', { user: req.user })
-  res.redirect('/')
+  res.redirect('/?code=' + oAuthCode)
 })
 
 // GET /auth/github
@@ -96,7 +98,8 @@ app.get('/auth/github',
 app.get('/auth/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function (req, res) {
-    var redirectUrl = '/?code=' + req.query.code
+    oAuthCode = req.query.code
+    var redirectUrl = '/?code=' + oAuthCode
     res.redirect(redirectUrl)
   })
 
