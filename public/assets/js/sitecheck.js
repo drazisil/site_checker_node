@@ -1,17 +1,17 @@
 /* global angular */
-var buildWatchApp = angular.module('checkSite', ['ngRoute'])
+var app = angular.module('checkSite', ['ngRoute', 'satellizer'])
 
-buildWatchApp.controller('NavController', function ($scope, $route, $routeParams, $location) {
+app.controller('NavController', function ($scope, $route, $routeParams, $location) {
   $scope.$route = $route
   $scope.$location = $location
   $scope.$routeParams = $routeParams
 })
 
-buildWatchApp.config(function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider) {
   $routeProvider
-    .when('/profile', {
-      templateUrl: 'templates/profile.html',
-      controller: 'ProfileController'
+    .when('/settings', {
+      templateUrl: 'templates/login.html',
+      controller: 'SettingsController'
     }).when('/siteDetail/:site_url*', {
       templateUrl: 'templates/site.html',
       controller: 'SiteController'
@@ -21,7 +21,13 @@ buildWatchApp.config(function ($routeProvider, $locationProvider) {
     })
 })
 
-buildWatchApp.controller('IndexController', function ($http, $scope) {
+app.config(function ($authProvider) {
+  $authProvider.github({
+    clientId: 'e2f93a285c3d307e2c90'
+  })
+})
+
+app.controller('IndexController', function ($http, $scope) {
   var frontpage = this
   frontpage.scope = $scope
 
@@ -40,10 +46,29 @@ buildWatchApp.controller('IndexController', function ($http, $scope) {
   updateSites(frontpage)
 })
 
-buildWatchApp.controller('ProfileController', function ($scope, $location) {
+app.controller('SettingsController', function ($scope, $auth, $location) {
   $scope.$location = $location
 })
 
-buildWatchApp.controller('SiteController', function ($scope, $location) {
+app.controller('SiteController', function ($scope, $location) {
   $scope.$location = $location
+})
+
+app.controller('AppController', function ($scope, $http, $window, $auth, $location) {
+  $scope.$location = $location
+  $scope.auth = $auth
+
+  $scope.isLoggedIn = $auth.isAuthenticated()
+
+  $scope.authenticate = function () {
+    $auth.authenticate('github')
+    $scope.isLoggedIn = true
+  }
+
+  $scope.logout = function () {
+    $auth.logout()
+    $http.get('./auth/logout').then(function (r) {
+    })
+    $scope.isLoggedIn = false
+  }
 })

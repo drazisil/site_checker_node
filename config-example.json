@@ -1,6 +1,8 @@
 {
-"SLACK_WEBHOOK_TOKEN": "xxx",
-"responseThreshold": 100,
-"bot_token": "xxx",
-"slack_channel": "yyy"
+    "responseThreshold": 100,
+    "bot_token": "xxx",
+    "slack_channel": "yyy",
+    "GITHUB_ID": "xxx",
+    "GITHUB_SECRET": "xxx",
+    "TOKEN_SECRET": "xxx"
 }
