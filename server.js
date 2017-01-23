@@ -80,9 +80,11 @@ app.post('/auth/github', function (req, res) {
         if (!profile.id) {
           return res.status(400).send({ message: 'User not found' })
         }
+
         user.github = profile.id
         user.picture = user.picture || profile.avatar_url
         user.displayName = user.displayName || profile.name
+        user.email = user.email || profile.email
         var token = createJWT(user)
         res.send({ token: token })
       } else {
