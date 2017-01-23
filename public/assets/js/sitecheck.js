@@ -46,7 +46,7 @@ app.controller('IndexController', function ($http, $scope) {
   updateSites(frontpage)
 })
 
-app.controller('SettingsController', function ($scope, $location, $auth) {
+app.controller('SettingsController', function ($scope, $auth, $location) {
   $scope.$location = $location
 })
 
@@ -54,12 +54,9 @@ app.controller('SiteController', function ($scope, $location) {
   $scope.$location = $location
 })
 
-app.controller('AppController', function ($scope, $window, $auth, $location) {
+app.controller('AppController', function ($scope, $http, $window, $auth, $location) {
   $scope.$location = $location
-
-  $scope.profileLink = '<a ng-click="authenticate()" href="#">Login</a>'
-
-  $auth.setStorageType('sessionStorage')
+  $scope.auth = $auth
 
   $scope.isLoggedIn = $auth.isAuthenticated()
 
@@ -70,6 +67,8 @@ app.controller('AppController', function ($scope, $window, $auth, $location) {
 
   $scope.logout = function () {
     $auth.logout()
+    $http.get('./auth/logout').then(function (r) {
+    })
     $scope.isLoggedIn = false
   }
 })

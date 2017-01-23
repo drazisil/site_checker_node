@@ -74,7 +74,8 @@ app.post('/auth/github', function (req, res) {
         /* if (user) {
           return res.status(409).send({ message: 'There is already a GitHub account that belongs to you' })
         }
-        */var token = req.header('Authorization').split(' ')[1]
+        */
+        var token = req.header('Authorization').split(' ')[1]
         var payload = jwt.decode(token, config.TOKEN_SECRET)
 
         if (!profile.id) {
@@ -85,21 +86,18 @@ app.post('/auth/github', function (req, res) {
         user.picture = user.picture || profile.avatar_url
         user.displayName = user.displayName || profile.name
         user.email = user.email || profile.email
-        var token = createJWT(user)
-        res.send({ token: token })
+        res.send({ token: createJWT(user) })
       } else {
         // Step 3b. Create a new user account or return an existing one.
-        if (user) {
-          var token = createJWT(user)
-          return res.send({ token: token })
+        if (user === {}) {
+          return res.send({ token: createJWT(user) })
         }
         user.github = profile.id
         user.picture = profile.avatar_url
         user.displayName = profile.name
         user.email = profile.email
 
-        var token = createJWT(user)
-        res.send({ token: token })
+        res.send({ token: createJWT(user) })
       }
     })
   })
@@ -155,6 +153,17 @@ app.get('/api/me', ensureAuthenticated, function (req, res) {
 
 app.get('/api/profile', function (req, res) {
   res.send(user)
+})
+
+app.get('/auth/logout', function (req, res) {
+  user = null
+  if (!user) {
+    user = {}
+    res.status(200).send()
+  } else {
+    console.dir(user)
+    res.status(500).send()
+  }
 })
 
 app.use(express.static('public'))
