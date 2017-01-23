@@ -64,11 +64,17 @@ app.post('/auth/github', function (req, res) {
 
   // Step 1. Exchange authorization code for access token.
   request.get({ url: accessTokenUrl, qs: params }, function (err, response, accessToken) {
+    if (err) {
+      throw err
+    }
     accessToken = qs.parse(accessToken)
     var headers = { 'User-Agent': 'Satellizer' }
 
     // Step 2. Retrieve profile information about the current user.
     request.get({ url: userApiUrl, qs: accessToken, headers: headers, json: true }, function (err, response, profile) {
+      if (err) {
+        throw err
+      }
       // Step 3a. Link user accounts.
       if (req.header('Authorization')) {
         /* if (user) {
@@ -76,7 +82,7 @@ app.post('/auth/github', function (req, res) {
         }
         */
         var token = req.header('Authorization').split(' ')[1]
-        var payload = jwt.decode(token, config.TOKEN_SECRET)
+        var payload = jwt.decode(token, config.TOKEN_SECRET) // eslint-disable-line no-unused-vars
 
         if (!profile.id) {
           return res.status(400).send({ message: 'User not found' })
