@@ -1,5 +1,5 @@
 /* global angular */
-var app = angular.module('checkSite', ['ngRoute'])
+var app = angular.module('checkSite', ['ngRoute', 'satellizer'])
 
 app.controller('NavController', function ($scope, $route, $routeParams, $location) {
   $scope.$route = $route
@@ -9,9 +9,9 @@ app.controller('NavController', function ($scope, $route, $routeParams, $locatio
 
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider
-    .when('/profile', {
+    .when('/settings', {
       templateUrl: 'templates/login.html',
-      controller: 'ProfileController'
+      controller: 'SettingsController'
     }).when('/siteDetail/:site_url*', {
       templateUrl: 'templates/site.html',
       controller: 'SiteController'
@@ -19,6 +19,12 @@ app.config(function ($routeProvider, $locationProvider) {
       templateUrl: 'templates/index.html',
       controller: 'IndexController'
     })
+})
+
+app.config(function ($authProvider) {
+  $authProvider.github({
+    clientId: 'e2f93a285c3d307e2c90'
+  })
 })
 
 app.controller('IndexController', function ($http, $scope) {
@@ -40,42 +46,18 @@ app.controller('IndexController', function ($http, $scope) {
   updateSites(frontpage)
 })
 
-app.controller('ProfileController', function ($scope, $window, $location) {
+app.controller('SettingsController', function ($scope, $location, $auth) {
   $scope.$location = $location
-
-  if ($scope.isLoggedIn) {
-    $location.path('/profile')
-  } else {
-    $window.location.href = '/login'
-  }
 })
 
 app.controller('SiteController', function ($scope, $location) {
   $scope.$location = $location
 })
 
-app.controller('AppController', function ($scope, $window, $location) {
+app.controller('AppController', function ($scope, $window, $auth, $location) {
   $scope.$location = $location
-  if (!$scope.user) {
-    $scope.user = {}
+
+  $scope.authenticate = function () {
+    $auth.authenticate('github')
   }
-  if (!$scope.user.code && (searchToObject().code !== '')) {
-    $scope.user.code = searchToObject().code
-  }
-  console.dir($scope.user)
 })
-
-function searchToObject () {
-  var pairs = window.location.search.substring(1).split('&')
-  var obj = {}
-  var pair
-
-  for (var i in pairs) {
-    if (pairs[i] === '') continue
-
-    pair = pairs[i].split('=')
-    obj[ decodeURIComponent(pair[0]) ] = decodeURIComponent(pair[1])
-  }
-
-  return obj
-}

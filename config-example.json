@@ -2,6 +2,7 @@
     "responseThreshold": 100,
     "bot_token": "xxx",
     "slack_channel": "yyy",
-    "github_oauth_client_id": "xxx",
-    "github_oauth_client_secret": "xxx"
+    "GITHUB_ID": "xxx",
+    "GITHUB_SECRET": "xxx",
+    "TOKEN_SECRET": "xxx"
 }

@@ -38,8 +38,8 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/">Dashboard</a></li>
-            <li><a href="/settings">Settings</a></li>
-            <li ><a href="/profile">Profile</a></li>
+            <li><a href="#settings">Settings</a></li>
+            <li ><a ng-click="authenticate()" href="#">Login</a></li>
             <li><a href="/help">Help</a></li>
           </ul>
           <form class="navbar-form navbar-right">
@@ -62,8 +62,12 @@
     <script src="./assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 
-     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
     <script src="https:////ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+
+    <!-- Satellizer CDN -->
+    <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
+
     <script src="./assets/js/sitecheck.js"></script>
   </body>
 </html>
