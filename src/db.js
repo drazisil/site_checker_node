@@ -3,6 +3,7 @@ var fs = require('fs')
 var sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('db/sites.db')
 var Site = require('./model/site.js')
+var User = require('./model/user.js')
 var config = require('../config.json')
 
 function init () {
@@ -10,6 +11,8 @@ function init () {
     db.run('CREATE TABLE IF NOT EXISTS status (id INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, status TEXT, response_time REAL, last_updated INTEGER)')
 
     db.run('CREATE TABLE IF NOT EXISTS sites (url TEXT UNIQUE PRIMARY KEY, check_time INTEGER DEFAULT 1, check_http INTEGER DEFAULT 0, check_https DEFAULT 1)')
+
+    db.run('CREATE TABLE IF NOT EXISTS users (id TEXT UNIQUE PRIMARY KEY, avatar_url TEXT, name TEXT, email TEXT, login TEXT, access_token TEXT, jwt TEXT)')
   })
 }
 
@@ -77,11 +80,37 @@ function updateSiteStatus (url, status, responseTime, callback) {
   })
 }
 
+function updateUser (user, callback) {
+  var stmt = db.prepare('INSERT OR REPLACE INTO users VALUES (?, ?, ?, ?, ?, ?, ?)')
+  stmt.run(user.githubId, user.picture, user.displayName, user.email, user.displayName, JSON.stringify(user.accessToken), user.jwt)
+  stmt.finalize(function (err, rows) {
+    if (err) {
+      callback(err)
+    } else {
+      callback(null, rows)
+    }
+  })
+}
+
+function fetchUser (userId, callback) {
+  db.get('SELECT * FROM users WHERE id = "' + userId + '"', function cbGet (err, row) {
+    if (err) {
+      callback(err)
+    } else {
+      var user = new User(row, JSON.parse(row.access_token))
+      user.jwt = row.jwt
+      callback(null, user)
+    }
+  })
+}
+
 module.exports = {
   getSites: getSites,
   getSitesStatus: getSitesStatus,
   getSiteStatusLatest: getSiteStatusLatest,
   importFromYml: importFromYml,
   init: init,
-  updateSiteStatus: updateSiteStatus
+  updateSiteStatus: updateSiteStatus,
+  fetchUser: fetchUser,
+  updateUser: updateUser
 }
