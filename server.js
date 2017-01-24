@@ -10,6 +10,7 @@ var bodyParser = require('body-parser')
 
 var siteChecker = require('./src/index.js')
 var logger = require('./src/logger.js')
+var User = require('./src/model/user.js')
 
 var app = express()
 app.use(cors())
@@ -88,22 +89,35 @@ app.post('/auth/github', function (req, res) {
           return res.status(400).send({ message: 'User not found' })
         }
 
-        user.github = profile.id
-        user.picture = user.picture || profile.avatar_url
-        user.displayName = user.displayName || profile.name
-        user.email = user.email || profile.email
-        res.send({ token: createJWT(user) })
+        user = new User(profile, accessToken)
+
+        user.jwt = createJWT(user)
+
+        res.send({ token: user.jwt })
       } else {
         // Step 3b. Create a new user account or return an existing one.
         if (user === {}) {
-          return res.send({ token: createJWT(user) })
+          return res.send({ token: user.jwt })
         }
-        user.github = profile.id
-        user.picture = profile.avatar_url
-        user.displayName = profile.name
-        user.email = profile.email
+        user = new User(profile, accessToken)
 
-        res.send({ token: createJWT(user) })
+        user.jwt = createJWT(user)
+
+        siteChecker.updateUser(user, function (err, res) {
+          if (err) {
+            logger.error(err)
+          }
+        })
+
+        siteChecker.fetchUser(user.githubId, function (err, res) {
+          if (err) {
+            logger.error(err)
+          } else {
+            console.dir(res)
+          }
+        })
+
+        res.send({ token: user.jwt })
       }
     })
   })

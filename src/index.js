@@ -23,5 +23,7 @@ module.exports = {
   checkSite: http.checkSite,
   fetchSitesStatus: http.fetchSitesStatus,
   init: init,
-  sendSiteToSlack: slack.sendMessageToChannel
+  sendSiteToSlack: slack.sendMessageToChannel,
+  fetchUser: db.fetchUser,
+  updateUser: db.updateUser
 }
