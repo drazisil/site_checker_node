@@ -6,8 +6,6 @@ const loop = require('./loop.js')
 function init(config) {
   db.init()
 
-  db.importFromYml('../site_list.yml')
-
   slack.init(config, () => {
     // TODO: Add logging
   })

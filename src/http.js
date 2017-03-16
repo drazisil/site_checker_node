@@ -27,14 +27,17 @@ function checkSite(site, callback) {
     if (err) {
       callback(err)
     } else {
-      db.updateSiteStatus(site.url, getStatusFromResponseTime(response.elapsedTime,
-        site.response_threshold), response.elapsedTime,
-        (errUpdateSiteStatus) => {
+      const responseCode = getStatusFromResponseTime(response.elapsedTime,
+        site.response_threshold)
+      db.updateSiteStatus(site.url, responseCode, response.elapsedTime,
+        (errUpdateSiteStatus, resUpdateSiteStatus) => {
           if (errUpdateSiteStatus) {
             callback(err)
           } else {
-            const res = response
+            const res = {}
             res.url = site.url
+            res.statusCode = responseCode
+            res.elapsedTime = response.elapsedTime
             callback(null, res)
           }
         })
