@@ -17,4 +17,4 @@ test:
     - yarn test
   post:
     - cp test-results.xml $CIRCLE_TEST_REPORTS/junit
-
+    - cp -R coverage $CIRCLE_ARTIFACTS/coverage
