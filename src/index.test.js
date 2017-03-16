@@ -1,8 +1,11 @@
-var should = require('should') // eslint-disable-line no-unused-vars
 
-describe('Main tests', function () {
-  describe('A test', function () {
-    it('should be a thing', function () {
+/* global describe it b:true*/
+/* eslint no-unused-vars: 0 */
+const should = require('should')
+
+describe('Main tests', () => {
+  describe('A test', () => {
+    it('should be a thing', () => {
       'moo'.should.equal('moo')
     })
   })
