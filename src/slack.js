@@ -65,7 +65,6 @@ function cmdCheckSite(config, bot, message) {
   if (siteUrl.substring(0, 1) === '<') {
     site.url = siteUrl.substring(1, siteUrl.length - 1)
   }
-  console.log(site.url)
   if (site.url.indexOf('|') >= 0) {
     site.url = site.url.split('|')[1]
   }
@@ -73,7 +72,6 @@ function cmdCheckSite(config, bot, message) {
     if (err) {
       sendMessageToChannel(bot, config.slack_channel, `I had an error: ${err.error}`)
     } else {
-      console.log(res)
       const msg = `Site: ${res.url}
         Status code: ${res.statusCode}
         Request time in ms: ${res.elapsedTime}`
@@ -143,7 +141,6 @@ function cmdFetchStatusAll(config, bot) {
           throw err2
         } else {
           res.forEach((site) => {
-            console.log(site)
             sendSiteToSlack(config, bot, site, (err) => {
               if (err) {
                 throw err
