@@ -1,4 +1,4 @@
-function User (profile, accessToken) {
+function User(profile, accessToken) {
   this.githubId = profile.id
   this.picture = profile.avatar_url
   this.displayName = profile.name

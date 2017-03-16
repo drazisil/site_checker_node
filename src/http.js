@@ -1,34 +1,58 @@
-var request = require('request')
-var db = require('./db.js')
-var async = require('async')
+const request = require('request')
+const db = require('./db.js')
+const async = require('async')
 
-function checkSite (site, callback) {
+function prefixIfNeeded(site) {
+  if (site.url.substring(0, 7) !== 'http://' && site.url.substring(0, 8) !== 'https://') {
+    if (site.check_http) {
+      return `http://${site.url}`
+    } else if (site.check_https) {
+      return `https://${site.url}`
+    }
+    return `http://${site.url}`
+  }
+  return site.url
+}
+
+/* eslint no-unused-vars: 0 */
+function getStatusFromResponseTime(responseTime, responseThreshold) {
+  return 'up'
+}
+
+function checkSite(site, callback) {
   request.get({
     url: prefixIfNeeded(site),
-    time: true
-  }, function (err, response) {
+    time: true,
+  }, (err, response) => {
     if (err) {
       callback(err)
     } else {
-      db.updateSiteStatus(site.url, getStatusFromResponseTime(response.elapsedTime, site.esponse_threshold), response.elapsedTime,
-        function (err, res) {
-          if (err) {
+      db.updateSiteStatus(site.url, getStatusFromResponseTime(response.elapsedTime,
+        site.response_threshold), response.elapsedTime,
+        (errUpdateSiteStatus) => {
+          if (errUpdateSiteStatus) {
             callback(err)
           } else {
-            response.url = site.url
-            callback(null, response)
+            const res = response
+            res.url = site.url
+            callback(null, res)
           }
         })
     }
   })
 }
 
-function getStatusFromResponseTime (responseTime, responseThreshold) {
-  return 'up'
+function fetchLatestStatus(sites, callback) {
+  async.map(sites, db.getSiteStatusLatest, (err, results) => {
+    if (err) {
+      throw err
+    }
+    callback(null, results)
+  })
 }
 
-function fetchSitesStatus (callback) {
-  db.getSites(function (err, res) {
+function fetchSitesStatus(callback) {
+  db.getSites((err, res) => {
     if (err) {
       callback(err)
     } else {
@@ -37,51 +61,30 @@ function fetchSitesStatus (callback) {
   })
 }
 
-function fetchLatestStatus (sites, callback) {
-  async.map(sites, db.getSiteStatusLatest, function (err, results) {
-    if (err) {
-      throw err
-    }
-    callback(null, results)
-  })
-}
-
 /* 1: Get all sites
 * 2: For each site, get latest status
 * 3: return array of statues
 */
 
-function fetchSiteStatusLatest (site, callback) {
-  db.getSiteStatusLatest(site, function (err, response) {
+function fetchSiteStatusLatest(site, callback) {
+  db.getSiteStatusLatest(site, (err, response) => {
     if (err) {
       callback(err)
+    }
+
+    if (response === undefined) {
+      callback({
+        status: 'fail',
+        error: `No status found for site: ${site.url}`,
+      })
     } else {
-      if (response === undefined) {
-        callback({'status': 'fail',
-          'error': 'No status found for site: ' + site.url})
-      } else {
-        callback(null, response)
-      }
+      callback(null, response)
     }
   })
 }
 
-function prefixIfNeeded (site) {
-  if (site.url.substring(0, 7) !== 'http://' && site.url.substring(0, 8) !== 'https://') {
-    if (site.check_http) {
-      return 'http://' + site.url
-    } else if (site.check_https) {
-      return 'https://' + site.url
-    } else {
-      return 'http://' + site.url
-    }
-  } else {
-    return site.url
-  }
-}
-
 module.exports = {
-  checkSite: checkSite,
-  fetchSiteStatusLatest: fetchSiteStatusLatest,
-  fetchSitesStatus: fetchSitesStatus
+  checkSite,
+  fetchSiteStatusLatest,
+  fetchSitesStatus,
 }

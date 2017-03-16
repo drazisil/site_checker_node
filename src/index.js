@@ -1,29 +1,31 @@
-var db = require('./db.js')
-var http = require('./http.js')
-var slack = require('./slack.js')
-var timer = require('./loop.js')
+const db = require('./db.js')
+const http = require('./http.js')
+const slack = require('./slack.js')
+const loop = require('./loop.js')
 
-function init (config, callback) {
+function init(config) {
   db.init()
 
   db.importFromYml('../site_list.yml')
 
-  slack.init(config, function () {
+  slack.init(config, () => {
     // TODO: Add logging
   })
 
   // Create list of sites to check
-  timer.init()
+  loop.init((err, siteList) => {
+    if (err) { throw err }
 
-  // Set timer to check sites
-  timer.start()
+    // Set timer to check sites
+    loop.start(siteList)
+  })
 }
 
 module.exports = {
   checkSite: http.checkSite,
   fetchSitesStatus: http.fetchSitesStatus,
-  init: init,
+  init,
   sendSiteToSlack: slack.sendMessageToChannel,
   fetchUser: db.fetchUser,
-  updateUser: db.updateUser
+  updateUser: db.updateUser,
 }
