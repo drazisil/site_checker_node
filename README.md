@@ -1,5 +1,7 @@
 # Site Checker
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/drazisil/site_checker_node.svg)](https://greenkeeper.io/)
+
 Utility to check sites with StatusPages that sometimes are not up to date
 
 ### Requirements
