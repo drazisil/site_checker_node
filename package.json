@@ -19,33 +19,33 @@
   "dependencies": {
     "async": "^2.1.4",
     "body-parser": "^1.16.0",
-    "botkit": "^0.4.9",
+    "botkit": "^0.7.4",
     "cors": "^2.8.1",
     "ejs": "^2.5.5",
     "express-partials": "^0.3.0",
     "express-session": "^1.14.2",
     "js-yaml": "^3.7.0",
     "jwt-simple": "^0.5.1",
-    "method-override": "^2.3.7",
+    "method-override": "^3.0.0",
     "morgan": "^1.7.0",
-    "node-json-db": "^0.7.3",
-    "passport": "^0.3.2",
+    "node-json-db": "^0.10.0",
+    "passport": "^0.4.0",
     "passport-github2": "^0.1.10",
     "request": "^2.79.0",
-    "slack": "^8.1.2",
+    "slack": "^11.0.2",
     "slackbots": "^1.0.2",
-    "sqlite3": "^3.1.8",
-    "winston": "^2.3.1",
-    "winston-daily-rotate-file": "^1.4.3"
+    "sqlite3": "^4.0.6",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^3.8.0"
   },
   "devDependencies": {
     "jshint": "^2.9.4",
-    "mocha": "^3.2.0",
+    "mocha": "^6.0.2",
     "mocha-junit-reporter": "^1.13.0",
-    "mocha-multi": "^0.10.0",
-    "nyc": "^10.1.2",
-    "should": "^11.1.2",
-    "standard": "^8.6.0"
+    "mocha-multi": "^1.0.1",
+    "nyc": "^13.3.0",
+    "should": "^13.2.3",
+    "standard": "^12.0.1"
   },
   "standard": {
     "globals": [
