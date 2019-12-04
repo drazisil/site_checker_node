@@ -2849,12 +2849,11 @@ signal-exit@^3.0.0, signal-exit@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-slack@^8.1.2:
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/slack/-/slack-8.1.2.tgz#c7c581a45ac4f237c6bd0b4271dca1d60ae5316c"
+slack@^11.0.2:
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/slack/-/slack-11.0.2.tgz#30f68527c5d1712b7faa3141db7716f89ac6e911"
   dependencies:
-    tiny-json-http "^1.0.3"
-    ws "^1.1.1"
+    tiny-json-http "^7.0.2"
 
 slackbots@^1.0.2:
   version "1.0.2"
@@ -3088,9 +3087,9 @@ through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 
-tiny-json-http@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tiny-json-http/-/tiny-json-http-1.0.3.tgz#1b0601d8514cd10f7d5e6c2a4ab52d3b68784843"
+tiny-json-http@^7.0.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/tiny-json-http/-/tiny-json-http-7.1.2.tgz#620e189849bab08992ec23fada7b48c7c61637b4"
 
 to-fast-properties@^1.0.1:
   version "1.0.2"
