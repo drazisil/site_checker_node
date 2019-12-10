@@ -2419,9 +2419,9 @@ node-fetch@^2.2.1:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
 
-node-json-db@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/node-json-db/-/node-json-db-0.7.3.tgz#bf631ff4d4cf4211cbdffe6cae6aaafe6ee54cdf"
+node-json-db@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/node-json-db/-/node-json-db-1.0.2.tgz#d1d1a2014667fa8aca8dd42666ebea00ed864888"
   dependencies:
     mkdirp "0.5.x"
 
