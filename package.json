@@ -27,7 +27,7 @@
     "js-yaml": "^3.7.0",
     "jwt-simple": "^0.5.1",
     "method-override": "^2.3.7",
-    "morgan": "^1.7.0",
+    "morgan": "^1.9.1",
     "node-json-db": "^0.7.3",
     "passport": "^0.3.2",
     "passport-github2": "^0.1.10",
