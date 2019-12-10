@@ -19,7 +19,7 @@
   "dependencies": {
     "async": "^2.1.4",
     "body-parser": "^1.16.0",
-    "botkit": "^0.4.9",
+    "botkit": "^4.6.1",
     "cors": "^2.8.1",
     "ejs": "^2.5.5",
     "express-partials": "^0.3.0",
