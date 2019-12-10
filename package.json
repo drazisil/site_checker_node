@@ -24,7 +24,7 @@
     "ejs": "^2.5.5",
     "express-partials": "^0.3.0",
     "express-session": "^1.14.2",
-    "js-yaml": "^3.7.0",
+    "js-yaml": "^3.13.1",
     "jwt-simple": "^0.5.1",
     "method-override": "^2.3.7",
     "morgan": "^1.9.1",
