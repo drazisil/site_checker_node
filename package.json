@@ -21,7 +21,7 @@
     "body-parser": "^1.16.0",
     "botkit": "^4.6.1",
     "cors": "^2.8.1",
-    "ejs": "^2.5.5",
+    "ejs": "^3.0.1",
     "express-partials": "^0.3.0",
     "express-session": "^1.14.2",
     "js-yaml": "^3.13.1",
