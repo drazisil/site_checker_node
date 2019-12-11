@@ -23,7 +23,7 @@
     "cors": "^2.8.1",
     "ejs": "^2.5.5",
     "express-partials": "^0.3.0",
-    "express-session": "^1.14.2",
+    "express-session": "^1.17.0",
     "js-yaml": "^3.13.1",
     "jwt-simple": "^0.5.3",
     "method-override": "^2.3.10",
