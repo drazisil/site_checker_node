@@ -29,7 +29,7 @@
     "method-override": "^2.3.10",
     "morgan": "^1.9.1",
     "node-json-db": "^1.0.2",
-    "passport": "^0.3.2",
+    "passport": "^0.4.1",
     "passport-github2": "^0.1.10",
     "request": "^2.79.0",
     "slack": "^11.0.2",
