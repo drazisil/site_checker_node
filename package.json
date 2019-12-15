@@ -34,7 +34,7 @@
     "request": "^2.79.0",
     "slack": "^11.0.2",
     "slackbots": "^1.2.0",
-    "sqlite3": "^3.1.8",
+    "sqlite3": "^4.1.1",
     "winston": "^2.3.1",
     "winston-daily-rotate-file": "^3.10.0"
   },
