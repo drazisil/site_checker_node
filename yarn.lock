@@ -309,6 +309,10 @@ assert@^1.4.1:
     object-assign "^4.1.1"
     util "0.10.3"
 
+async-limiter@~1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
+
 async@^2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/async/-/async-2.1.4.tgz#2d2160c7788032e4dd6cbe2502f1f9a2c8f6cde4"
@@ -2109,11 +2113,7 @@ lodash@3.7.x:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.7.0.tgz#3678bd8ab995057c07ade836ed2ef087da811d45"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.3.0:
-  version "4.17.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
-
-lodash@^4.17.13:
+lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.13, lodash@^4.17.2, lodash@^4.3.0:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
 
@@ -3044,15 +3044,16 @@ slack@^11.0.2:
   dependencies:
     tiny-json-http "^7.0.2"
 
-slackbots@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/slackbots/-/slackbots-1.0.2.tgz#eeeef6eb13c9bf67a0d0fc3ec52ec384c20023a2"
+slackbots@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/slackbots/-/slackbots-1.2.0.tgz#a3f6517ef0ef2caf9affdd77c92b93ceca75d732"
   dependencies:
     extend "^2.0.1"
     lodash "^4.17.2"
     request "^2.56.0"
     vow "^0.4.9"
     ws "^1.0.1"
+    ws-heartbeat "^1.0.4"
 
 slice-ansi@0.0.4:
   version "0.0.4"
@@ -3597,6 +3598,18 @@ write@^0.2.1:
   resolved "https://registry.yarnpkg.com/write/-/write-0.2.1.tgz#5fc03828e264cea3fe91455476f7a3c566cb0757"
   dependencies:
     mkdirp "^0.5.1"
+
+ws-heartbeat@^1.0.4:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ws-heartbeat/-/ws-heartbeat-1.1.0.tgz#7989331381ba5a432092ee6093fa081199549d8f"
+  dependencies:
+    ws "6"
+
+ws@6:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.1.tgz#442fdf0a47ed64f59b6a5d8ff130f4748ed524fb"
+  dependencies:
+    async-limiter "~1.0.0"
 
 ws@^1.0.1:
   version "1.1.5"
