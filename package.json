@@ -28,7 +28,7 @@
     "jwt-simple": "^0.5.3",
     "method-override": "^3.0.0",
     "morgan": "^1.9.1",
-    "node-json-db": "^1.0.2",
+    "node-json-db": "^1.0.3",
     "passport": "^0.4.1",
     "passport-github2": "^0.1.11",
     "request": "^2.79.0",
