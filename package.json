@@ -36,7 +36,7 @@
     "slackbots": "^1.2.0",
     "sqlite3": "^4.1.1",
     "winston": "^3.2.1",
-    "winston-daily-rotate-file": "^4.4.0"
+    "winston-daily-rotate-file": "^4.4.1"
   },
   "devDependencies": {
     "jshint": "^2.10.3",
