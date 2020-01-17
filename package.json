@@ -41,7 +41,7 @@
   "devDependencies": {
     "jshint": "^2.11.0",
     "mocha": "^3.2.0",
-    "mocha-junit-reporter": "^1.23.2",
+    "mocha-junit-reporter": "^1.23.3",
     "mocha-multi": "^1.1.3",
     "nyc": "^15.0.0",
     "should": "^13.2.3",
