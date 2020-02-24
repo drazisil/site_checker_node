@@ -382,9 +382,9 @@ async@^2.6.1, async@^2.6.3:
   dependencies:
     lodash "^4.17.14"
 
-async@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/async/-/async-3.1.1.tgz#dd3542db03de837979c9ebbca64ca01b06dc98df"
+async@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.0.tgz#b3a2685c5ebb641d3de02d161002c60fc9f85720"
 
 asynckit@^0.4.0:
   version "0.4.0"
