@@ -439,7 +439,7 @@ bignumber.js@^7.2.1:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
 
-body-parser@1.19.0, body-parser@^1.16.0, body-parser@^1.18.3:
+body-parser@1.19.0, body-parser@^1.16.0, body-parser@^1.19.0:
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.19.0.tgz#96b2709e57c9c4e09a6fd66a8fd979844f69f08a"
   dependencies:
@@ -454,76 +454,78 @@ body-parser@1.19.0, body-parser@^1.16.0, body-parser@^1.18.3:
     raw-body "2.4.0"
     type-is "~1.6.17"
 
-botbuilder-core@4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/botbuilder-core/-/botbuilder-core-4.7.1.tgz#8b9198aa91b1e85f2116e79a178d43dbaf8aec82"
+botbuilder-core@4.9.0, botbuilder-core@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/botbuilder-core/-/botbuilder-core-4.9.0.tgz#fab93d2543c855a0fd765113f9f1ea9a6e89391f"
   dependencies:
     assert "^1.4.1"
-    botframework-schema "4.7.1"
+    botframework-schema "4.9.0"
 
-botbuilder-dialogs@^4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/botbuilder-dialogs/-/botbuilder-dialogs-4.7.1.tgz#d00f13a1ceb319e88bd594b37307ad96d4205e78"
+botbuilder-dialogs@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/botbuilder-dialogs/-/botbuilder-dialogs-4.9.0.tgz#939061d84f88252d5abffedc388038eb29608067"
   dependencies:
     "@microsoft/recognizers-text-choice" "1.1.4"
     "@microsoft/recognizers-text-date-time" "1.1.4"
     "@microsoft/recognizers-text-number" "1.1.4"
     "@microsoft/recognizers-text-suite" "1.1.4"
     "@types/node" "^10.12.18"
-    botbuilder-core "4.7.1"
+    botbuilder-core "4.9.0"
     globalize "^1.4.2"
 
-botbuilder@^4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/botbuilder/-/botbuilder-4.7.1.tgz#11584d42adc7af8f2e7f60a7d54fddab2502651a"
+botbuilder@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/botbuilder/-/botbuilder-4.9.0.tgz#6a4451d24265ee2bf067bae5231a4db40e99466b"
   dependencies:
     "@azure/ms-rest-js" "1.2.6"
     "@types/node" "^10.12.18"
     axios "^0.19.0"
-    botbuilder-core "4.7.1"
-    botframework-connector "4.7.1"
-    botframework-streaming "4.7.1"
+    botbuilder-core "4.9.0"
+    botframework-connector "4.9.0"
+    botframework-streaming "4.9.0"
     filenamify "^4.1.0"
     fs-extra "^7.0.1"
+    moment-timezone "^0.5.28"
 
-botframework-connector@4.7.1, botframework-connector@^4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/botframework-connector/-/botframework-connector-4.7.1.tgz#69ebe3cad3ad0078f6ccc610522590cb37d1fc74"
+botframework-connector@4.9.0, botframework-connector@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/botframework-connector/-/botframework-connector-4.9.0.tgz#fbadd98554821f752f0ed30422907f46fbffa373"
   dependencies:
     "@azure/ms-rest-js" "1.2.6"
     "@types/jsonwebtoken" "7.2.8"
     "@types/node" "^10.12.18"
     adal-node "0.2.1"
     base64url "^3.0.0"
-    botframework-schema "4.7.1"
+    botframework-schema "4.9.0"
     form-data "^2.3.3"
     jsonwebtoken "8.0.1"
     node-fetch "^2.2.1"
     rsa-pem-from-mod-exp "^0.8.4"
 
-botframework-schema@4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/botframework-schema/-/botframework-schema-4.7.1.tgz#73097a326e72305aeb3cb328a64739059df2d626"
+botframework-schema@4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/botframework-schema/-/botframework-schema-4.9.0.tgz#3dffc957038e6fe8d8ca4f42b57f5a76e8391d93"
 
-botframework-streaming@4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/botframework-streaming/-/botframework-streaming-4.7.1.tgz#0a805eabc85bee80d2f8aabe941f3c6ba94966ae"
+botframework-streaming@4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/botframework-streaming/-/botframework-streaming-4.9.0.tgz#07863403d96ac408210f2f633926eb680e2a7b0b"
   dependencies:
     "@types/ws" "^6.0.3"
     uuid "^3.3.2"
     ws "^7.1.2"
 
-botkit@^4.6.2:
-  version "4.6.2"
-  resolved "https://registry.yarnpkg.com/botkit/-/botkit-4.6.2.tgz#fd2b5e36f3a6f0fc0f337facc018459c94beaf66"
+botkit@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/botkit/-/botkit-4.9.0.tgz#bbfeafd9202d84cbd5841b5b638726ba00c9c7e8"
   dependencies:
-    body-parser "^1.18.3"
-    botbuilder "^4.7.1"
-    botbuilder-dialogs "^4.7.1"
-    botframework-connector "^4.7.1"
+    body-parser "^1.19.0"
+    botbuilder "^4.9.0"
+    botbuilder-core "^4.9.0"
+    botbuilder-dialogs "^4.9.0"
+    botframework-connector "^4.9.0"
     debug "^4.1.0"
-    express "^4.16.4"
-    mustache "^3.0.1"
+    express "^4.17.1"
+    mustache "^4.0.1"
     path "^0.12.7"
     request "^2.88.0"
     ware "^1.3.0"
@@ -1253,7 +1255,7 @@ express-session@^1.17.0:
     safe-buffer "5.2.0"
     uid-safe "~2.1.5"
 
-express@^4.16.4:
+express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
   dependencies:
@@ -2345,6 +2347,16 @@ mocha@^3.2.0:
     mkdirp "0.5.1"
     supports-color "3.1.2"
 
+moment-timezone@^0.5.28:
+  version "0.5.31"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.31.tgz#9c40d8c5026f0c7ab46eda3d63e49c155148de05"
+  dependencies:
+    moment ">= 2.9.0"
+
+"moment@>= 2.9.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.26.0.tgz#5e1f82c6bafca6e83e808b30c8705eed0dcbd39a"
+
 moment@^2.11.2:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
@@ -2375,9 +2387,9 @@ ms@^2.0.0, ms@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
 
-mustache@^3.0.1:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/mustache/-/mustache-3.1.0.tgz#9fba26e7aefc5709f07ff585abb7e0abced6c372"
+mustache@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.0.1.tgz#d99beb031701ad433338e7ea65e0489416c854a2"
 
 mute-stream@0.0.7:
   version "0.0.7"
