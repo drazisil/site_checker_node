@@ -39,7 +39,7 @@
     "sqlite3": "^5.0.0",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.5.0",
-    "snyk": "^1.370.1"
+    "snyk": "^1.373.0"
   },
   "devDependencies": {
     "jshint": "^2.11.1",
