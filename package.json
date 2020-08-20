@@ -42,7 +42,7 @@
     "snyk": "^1.379.2"
   },
   "devDependencies": {
-    "jshint": "^2.11.1",
+    "jshint": "^2.12.0",
     "mocha": "^8.1.1",
     "mocha-junit-reporter": "^2.0.0",
     "mocha-multi": "^1.1.3",
